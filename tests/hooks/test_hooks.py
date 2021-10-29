@@ -14,7 +14,6 @@ def rabbitmq_hook(monkeypatch):
 
 @pytest.fixture(autouse=True)
 def delete_test_queue(rabbitmq_hook):
-    rabbitmq_hook = RabbitMQHook(rabbitmq_conn_id="conn_rabbitmq")
     rabbitmq_hook.delete_queue("test")
 
 
