@@ -14,6 +14,13 @@ class RabbitMQHook(BaseHook):
         """Returns custom field behaviour"""
         return {
             "hidden_fields": ["schema", "extra"],
+            "relabeling": {},
+            "placeholders": {
+                "login": "guest",
+                "password": "guest",
+                "port": "5672",
+                "host": "localhost",
+            },
         }
 
     def __init__(
