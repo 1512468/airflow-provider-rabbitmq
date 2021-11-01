@@ -7,6 +7,9 @@ packages = [
     { include = "rabbitmq_provider" },
 ]
 
+[tool.poetry.plugins.apache_airflow_provider]
+provider_info = "rabbitmq_provider.__init__:get_provider_info"
+
 [tool.poetry.dependencies]
 python = "^3.8"
 apache-airflow = "^2.2.0"
