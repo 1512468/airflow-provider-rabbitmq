@@ -3,6 +3,9 @@ name = "airflow-provider-rabbitmq"
 version = "0.1.0"
 description = "A RabbitMQ provider for Apache Airflow"
 authors = ["Tes Engineering <engineering@tesglobal.com>"]
+packages = [
+    { include = "rabbitmq_provider" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
