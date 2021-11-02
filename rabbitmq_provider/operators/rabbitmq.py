@@ -6,7 +6,7 @@ from rabbitmq_provider.hooks.rabbitmq import RabbitMQHook
 
 class RabbitMQOperator(BaseOperator):
 
-    ui_color = "ff6600"
+    ui_color = "#ff6600"
 
     @apply_defaults
     def __init__(
