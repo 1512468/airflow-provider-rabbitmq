@@ -21,6 +21,6 @@ def test_sensor():
     )
 
     # Queue has 1 message, will be consumed and return True
-    assert sensor.poke() is True
+    assert sensor.poke(context={}) is True
     # Queue now has no message, will return False
-    assert sensor.poke() is False
+    assert sensor.poke(context={}) is False

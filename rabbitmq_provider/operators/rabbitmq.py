@@ -23,6 +23,6 @@ class RabbitMQOperator(BaseOperator):
         self.message = message
         self.rabbitmq_conn_id = rabbitmq_conn_id
 
-    def execute(self):
+    def execute(self, context):
         hook = RabbitMQHook(self.rabbitmq_conn_id)
         hook.publish(self.exchange, self.routing_key, self.message)

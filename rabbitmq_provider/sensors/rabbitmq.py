@@ -13,7 +13,7 @@ class RabbitMQSensor(BaseSensorOperator):
         self.queue = queue
         self.rabbitmq_conn_id = rabbitmq_conn_id
 
-    def poke(self):
+    def poke(self, context):
         hook = RabbitMQHook(self.rabbitmq_conn_id)
         message = hook.pull(self.queue)
         if message:

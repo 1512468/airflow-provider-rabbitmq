@@ -15,4 +15,4 @@ def test_operator(monkeypatch):
         routing_key="test",
         message="Hello world",
     )
-    operator.execute()
+    operator.execute(context={})
