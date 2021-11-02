@@ -5,6 +5,9 @@ from rabbitmq_provider.hooks.rabbitmq import RabbitMQHook
 
 
 class RabbitMQSensor(BaseSensorOperator):
+
+    ui_color = "#ff6600"
+
     @apply_defaults
     def __init__(
         self, queue: str, rabbitmq_conn_id: str = "rabbitmq_default", **kwargs
