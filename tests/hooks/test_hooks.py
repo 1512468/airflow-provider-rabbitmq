@@ -17,7 +17,10 @@ def delete_test_queue(rabbitmq_hook):
     rabbitmq_hook.delete_queue("test")
 
 
-def test_hook():
+def test_hook(monkeypatch):
+    monkeypatch.setenv(
+        "AIRFLOW_CONN_CONN_RABBITMQ", "amqp://guest:guest@localhost:5672"
+    )
     hook = RabbitMQHook(rabbitmq_conn_id="conn_rabbitmq")
     assert hook.get_conn()
 
