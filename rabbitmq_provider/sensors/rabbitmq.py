@@ -6,6 +6,7 @@ from rabbitmq_provider.hooks.rabbitmq import RabbitMQHook
 
 class RabbitMQSensor(BaseSensorOperator):
 
+    template_fields = ["queue"]
     ui_color = "#ff6600"
 
     @apply_defaults

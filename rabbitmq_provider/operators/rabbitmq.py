@@ -6,6 +6,7 @@ from rabbitmq_provider.hooks.rabbitmq import RabbitMQHook
 
 class RabbitMQOperator(BaseOperator):
 
+    template_fields = ["exchange", "routing_key", "message"]
     ui_color = "#ff6600"
 
     @apply_defaults
