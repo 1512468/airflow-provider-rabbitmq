@@ -13,13 +13,14 @@ class RabbitMQHook(BaseHook):
     def get_ui_field_behaviour():
         """Returns custom field behaviour"""
         return {
-            "hidden_fields": ["schema", "extra"],
-            "relabeling": {},
+            "hidden_fields": ["extra"],
+            "relabeling": {"schema": "vhost"},
             "placeholders": {
                 "login": "guest",
                 "password": "guest",
                 "port": "5672",
                 "host": "localhost",
+                "schema": "/",
             },
         }
 
@@ -43,7 +44,9 @@ class RabbitMQHook(BaseHook):
         conn = self.get_connection(self.rabbitmq_conn_id)
 
         credentials = pika.PlainCredentials(conn.login, conn.password)
-        parameters = pika.ConnectionParameters(conn.host, conn.port, "/", credentials)
+        parameters = pika.ConnectionParameters(
+            conn.host, conn.port, "/" + conn.schema, credentials
+        )
         connection = pika.BlockingConnection(parameters)
         return connection
 
