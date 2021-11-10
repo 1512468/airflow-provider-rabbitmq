@@ -3,6 +3,12 @@ from airflow.hooks.base import BaseHook
 
 
 class RabbitMQHook(BaseHook):
+    """RabbitMQ interaction hook.
+
+    :param rabbitmq_conn_id: 'Conn ID` of the Connection to be used to
+    configure this hook, defaults to default_conn_name
+    :type rabbitmq_conn_id: str, optional
+    """
 
     conn_name_attr = "rabbitmq_conn_id"
     default_conn_name = "rabbitmq_default"
@@ -28,18 +34,16 @@ class RabbitMQHook(BaseHook):
         self,
         rabbitmq_conn_id: str = default_conn_name,
     ) -> None:
-        """RabbitMQ interaction hook.
-
-        :param rabbitmq_conn_id: 'Conn ID` of the Connection to be used to
-        configure this hook, defaults to default_conn_name
-        :type rabbitmq_conn_id: str, optional
-        """
         super().__init__()
         self.rabbitmq_conn_id = rabbitmq_conn_id
         self._client = None
 
     def get_conn(self):
-        """Return pika connection."""
+        """Returns connection to RabbitMQ using pika.
+
+        :return: connection to RabbitMQ server
+        :rtype: pika.BlockingConnection
+        """
 
         conn = self.get_connection(self.rabbitmq_conn_id)
 
@@ -50,25 +54,58 @@ class RabbitMQHook(BaseHook):
         connection = pika.BlockingConnection(parameters)
         return connection
 
-    def publish(self, exchange: str, routing_key: str, message: str):
+    def publish(self, exchange: str, routing_key: str, message: str) -> None:
+        """Publish a message.
+
+        :param exchange: the exchange to publish to
+        :type exchange: str
+        :param routing_key: the routing key to publish to
+        :type routing_key: str
+        :param message: the message to publish
+        :type message: str
+        """
         connection = self.get_conn()
         channel = connection.channel()
         channel.basic_publish(exchange, routing_key, message)
         channel.close()
 
-    def declare_queue(self, name: str, passive: bool = False):
+    def declare_queue(self, name: str, passive: bool = False) -> pika.frame.Method:
+        """Declare a queue.
+
+        :param name: the queue name
+        :type name: str
+        :param passive: Only check to see if the queue exists and raise
+          `ChannelClosed` if it doesn't, defaults to False
+        :type passive: bool, optional
+        :return: Method frame
+        :rtype: pika.frame.Method
+        """
         connection = self.get_conn()
         channel = connection.channel()
         declaration = channel.queue_declare(name, passive)
         channel.close()
         return declaration
 
-    def delete_queue(self, name: str):
+    def delete_queue(self, name: str) -> pika.frame.Method:
+        """Delete a queue.
+
+        :param name: the queue name
+        :type name: str
+        :returns: Method frame
+        :rtype: pika.frame.Method
+        """
         connection = self.get_conn()
         channel = connection.channel()
         return channel.queue_delete(name)
 
-    def pull(self, queue: str):
+    def pull(self, queue: str) -> str:
+        """Pull and acknowledge a message from the queue.
+
+        :param queue: the queue to pull messages from
+        :type queue: str
+        :return: the pulled message, if one exists
+        :rtype: str
+        """
         connection = self.get_conn()
         channel = connection.channel()
         method_frame, _, body = channel.basic_get(queue)

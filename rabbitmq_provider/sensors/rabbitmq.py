@@ -5,6 +5,14 @@ from rabbitmq_provider.hooks.rabbitmq import RabbitMQHook
 
 
 class RabbitMQSensor(BaseSensorOperator):
+    """RabbitMQ sensor that monitors a queue for any messages.
+
+    :param queue: The name of the queue to monitor
+    :type queue: str
+    :param rabbitmq_conn_id: connection that has the RabbitMQ
+    connection (i.e amqp://guest:guest@localhost:5672), defaults to "rabbitmq_default"
+    :type rabbitmq_conn_id: str, optional
+    """
 
     template_fields = ["queue"]
     ui_color = "#ff6600"

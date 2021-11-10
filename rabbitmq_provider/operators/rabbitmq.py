@@ -1,3 +1,5 @@
+from typing import Any
+
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
@@ -5,8 +7,22 @@ from rabbitmq_provider.hooks.rabbitmq import RabbitMQHook
 
 
 class RabbitMQOperator(BaseOperator):
+    """RabbitMQ operator that publishes a message with the given
+    exchange, routing key, and message.
+
+    :param exchange: the exchange to publish to
+    :type exchange: str
+    :param routing_key: the routing key to publish to
+    :type routing_key: str
+    :param message: the message to publish
+    :type message: str
+    :param rabbitmq_conn_id: connection that has the RabbitMQ
+    connection (i.e amqp://guest:guest@localhost:5672), defaults to "rabbitmq_default"
+    :type rabbitmq_conn_id: str, optional
+    """
 
     template_fields = ["exchange", "routing_key", "message"]
+
     ui_color = "#ff6600"
 
     @apply_defaults
