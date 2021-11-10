@@ -28,7 +28,7 @@ from rabbitmq_provider.operators.rabbitmq import RabbitMQOperator
 
 ### RabbitMQ Sensor
 
-The `RabbitMQSensor checks a given queue for a message. Once it has found a message
+The `RabbitMQSensor` checks a given queue for a message. Once it has found a message
 the sensor triggers downstream proccesses in your DAG.
 
 Import into your DAG using:
