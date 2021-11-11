@@ -12,7 +12,7 @@ provider_info = "rabbitmq_provider.__init__:get_provider_info"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-apache-airflow = "^2.2.0"
+apache-airflow = ">=1.10"
 pika = "^1.2.0"
 
 [tool.poetry.dev-dependencies]
