@@ -48,8 +48,10 @@ class RabbitMQHook(BaseHook):
         conn = self.get_connection(self.rabbitmq_conn_id)
 
         credentials = pika.PlainCredentials(conn.login, conn.password)
+        if not conn.schema:
+            conn.schema = "/"  # if no vhost given, set to /
         parameters = pika.ConnectionParameters(
-            conn.host, conn.port, "/" + conn.schema, credentials
+            conn.host, conn.port, conn.schema, credentials
         )
         connection = pika.BlockingConnection(parameters)
         return connection
