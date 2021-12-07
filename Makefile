@@ -7,3 +7,6 @@ lint:
 	poetry run bandit -r  . -x ./test
 	poetry run flake8 .
 	poetry run isort .
+
+test:
+	poetry run pytest .
