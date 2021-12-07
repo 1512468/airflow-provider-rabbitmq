@@ -48,5 +48,5 @@ poetry run pytest .
 A RabbitMQ instance is required to run the tests. Use the following command:
 
 ```shell
-docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management`
+docker run --rm -it --hostname my-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
 ```
