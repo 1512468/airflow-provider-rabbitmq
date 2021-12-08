@@ -14,6 +14,7 @@ provider_info = "rabbitmq_provider.__init__:get_provider_info"
 python = "^3.7"
 apache-airflow = ">=1.10"
 pika = "^1.2.0"
+whippet = "^0.3.2"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
