@@ -1,4 +1,5 @@
 import pytest
+import pika
 
 from airflow.exceptions import AirflowSensorTimeout
 from rabbitmq_provider.hooks.rabbitmq import RabbitMQHook
@@ -61,3 +62,18 @@ def test_sensor_execute_returns_message():
         sensor.execute(context={})
     # Poke will return False as no message
     assert sensor.poke(context={}) is False
+
+
+def test_errors_if_queue_does_not_exist():
+    with pytest.raises(
+        pika.exceptions.ChannelClosedByBroker,
+        match="""\(404, \"NOT_FOUND - no queue \'does_not_exist\' in vhost""",
+    ):
+        sensor = RabbitMQSensor(
+            task_id="sample_sensor_check",
+            rabbitmq_conn_id="conn_rabbitmq",
+            queue="does_not_exist",
+            poke_interval=1,
+            timeout=2,
+        )
+        sensor.execute(context={})
