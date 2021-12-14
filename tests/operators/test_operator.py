@@ -24,7 +24,7 @@ def test_operator():
     operator.execute(context={})
 
 
-def test_bad_exchange_name():
+def test_errors_if_exchange_does_not_exist():
 
     with pytest.raises(pika.exceptions.ChannelClosedByBroker,
                        match="""\(404, \"NOT_FOUND - no exchange \'does_not_exist\' in vhost""",):
