@@ -4,10 +4,15 @@ import pytest
 from rabbitmq_provider.operators.rabbitmq import RabbitMQOperator
 
 
-def test_operator(monkeypatch):
+@pytest.fixture(autouse=True)
+def set_monkeypatch_env(monkeypatch):
     monkeypatch.setenv(
         "AIRFLOW_CONN_CONN_RABBITMQ", "amqp://guest:guest@localhost:5672"
     )
+    return
+
+
+def test_operator():
 
     operator = RabbitMQOperator(
         task_id="run_id",
@@ -19,10 +24,7 @@ def test_operator(monkeypatch):
     operator.execute(context={})
 
 
-def test_bad_exchange_name(monkeypatch):
-    monkeypatch.setenv(
-        "AIRFLOW_CONN_CONN_RABBITMQ", "amqp://guest:guest@localhost:5672"
-    )
+def test_bad_exchange_name():
 
     with pytest.raises(pika.exceptions.ChannelClosedByBroker,
                        match="""\(404, \"NOT_FOUND - no exchange \'does_not_exist\' in vhost""",):
