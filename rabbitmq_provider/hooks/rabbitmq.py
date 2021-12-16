@@ -71,11 +71,11 @@ class RabbitMQHook(BaseHook):
         channel.basic_publish(exchange, routing_key, message)
         channel.close()
 
-    def declare_queue(self, name: str, passive: bool = False) -> pika.frame.Method:
+    def declare_queue(self, queue_name: str, passive: bool = False) -> pika.frame.Method:
         """Declare a queue.
 
-        :param name: the queue name
-        :type name: str
+        :param queue_name: the queue name
+        :type queue_name: str
         :param passive: Only check to see if the queue exists and raise
           `ChannelClosed` if it doesn't, defaults to False
         :type passive: bool, optional
@@ -84,45 +84,45 @@ class RabbitMQHook(BaseHook):
         """
         connection = self.get_conn()
         channel = connection.channel()
-        declaration = channel.queue_declare(name, passive)
+        declaration = channel.queue_declare(queue_name, passive)
         channel.close()
         return declaration
 
-    def purge_queue(self, name: str) -> pika.frame.Method:
+    def purge_queue(self, queue_name: str) -> pika.frame.Method:
         """Purge a queue.
 
-        :param name: the queue name
-        :type name: str
+        :param queue_name: the queue name
+        :type queue_name: str
         :returns: Method frame
         :rtype: pika.frame.Method
         """
         connection = self.get_conn()
         channel = connection.channel()
-        return channel.queue_purge(name)
+        return channel.queue_purge(queue_name)
 
-    def delete_queue(self, name: str) -> pika.frame.Method:
+    def delete_queue(self, queue_name: str) -> pika.frame.Method:
         """Delete a queue.
 
-        :param name: the queue name
-        :type name: str
+        :param queue_name: the queue name
+        :type queue_name: str
         :returns: Method frame
         :rtype: pika.frame.Method
         """
         connection = self.get_conn()
         channel = connection.channel()
-        return channel.queue_delete(name)
+        return channel.queue_delete(queue_name)
 
-    def pull(self, queue: str) -> str:
+    def pull(self, queue_name: str) -> str:
         """Pull and acknowledge a message from the queue.
 
-        :param queue: the queue to pull messages from
-        :type queue: str
+        :param queue_name: the queue to pull messages from
+        :type queue_name: str
         :return: the pulled message, if one exists
         :rtype: str
         """
         connection = self.get_conn()
         channel = connection.channel()
-        method_frame, _, body = channel.basic_get(queue)
+        method_frame, _, body = channel.basic_get(queue_name)
         if method_frame:
             channel.basic_ack(method_frame.delivery_tag)
             message = body
