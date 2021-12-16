@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "airflow-provider-rabbitmq"
-version = "0.4.0"
+version = "0.5.0"
 description = "A RabbitMQ provider for Apache Airflow"
 authors = ["Tes Engineering <engineering@tesglobal.com>"]
 packages = [
