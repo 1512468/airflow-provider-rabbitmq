@@ -9,7 +9,6 @@ def set_monkeypatch_env(monkeypatch):
     monkeypatch.setenv(
         "AIRFLOW_CONN_CONN_RABBITMQ", "amqp://guest:guest@localhost:5672"
     )
-    return
 
 
 def test_operator():
@@ -26,8 +25,10 @@ def test_operator():
 
 def test_errors_if_exchange_does_not_exist():
 
-    with pytest.raises(pika.exceptions.ChannelClosedByBroker,
-                       match="""\(404, \"NOT_FOUND - no exchange \'does_not_exist\' in vhost""",):
+    with pytest.raises(
+        pika.exceptions.ChannelClosedByBroker,
+        match="""\(404, \"NOT_FOUND - no exchange \'does_not_exist\' in vhost""",
+    ):
 
         operator = RabbitMQOperator(
             task_id="run_id",
