@@ -17,7 +17,7 @@ def reset_test_queue(monkeypatch):
 
 def test_sensor():
     sensor = RabbitMQSensor(
-        task_id="sample_sensor_check", rabbitmq_conn_id="conn_rabbitmq", rabbit_queue="test"
+        task_id="sample_sensor_check", rabbitmq_conn_id="conn_rabbitmq", queue_name="test"
     )
     hook = RabbitMQHook(rabbitmq_conn_id="conn_rabbitmq")
     hook.publish("", "test", "Hello World")
@@ -30,7 +30,7 @@ def test_sensor():
 
 def test_sensor_with_empty_content():
     sensor = RabbitMQSensor(
-        task_id="sample_sensor_check", rabbitmq_conn_id="conn_rabbitmq", rabbit_queue="test"
+        task_id="sample_sensor_check", rabbitmq_conn_id="conn_rabbitmq", queue_name="test"
     )
     hook = RabbitMQHook(rabbitmq_conn_id="conn_rabbitmq")
     hook.publish("", "test", "")
@@ -45,7 +45,7 @@ def test_sensor_execute_returns_message():
     sensor = RabbitMQSensor(
         task_id="sample_sensor_check",
         rabbitmq_conn_id="conn_rabbitmq",
-        rabbit_queue="test",
+        queue_name="test",
         poke_interval=1,
         timeout=2,
     )
