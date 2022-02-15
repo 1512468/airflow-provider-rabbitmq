@@ -4,6 +4,11 @@ def get_provider_info():
         "name": "RabbitMQ Airflow Provider",
         "description": "A RabbitMQ provider for Apache Airflow.",
         "hook-class-names": ["rabbitmq_provider.hooks.rabbitmq.RabbitMQHook"],
-        # "extra-links": ["sample_provider.operators.sample_operator.ExtraLink"],
+        "connection-types": [
+            {
+                "hook-class-name": "rabbitmq_provider.hooks.rabbitmq.RabbitMQHook",
+                "connection-type": "amqp",
+            }
+        ],
         "versions": ["0.0.1"],
     }
