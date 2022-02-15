@@ -18,7 +18,9 @@ def reset_test_queue(monkeypatch):
 
 def test_sensor():
     sensor = RabbitMQSensor(
-        task_id="sample_sensor_check", rabbitmq_conn_id="conn_rabbitmq", queue_name="test"
+        task_id="sample_sensor_check",
+        rabbitmq_conn_id="conn_rabbitmq",
+        queue_name="test",
     )
     hook = RabbitMQHook(rabbitmq_conn_id="conn_rabbitmq")
     hook.publish("", "test", "Hello World")
@@ -31,7 +33,9 @@ def test_sensor():
 
 def test_sensor_with_empty_content():
     sensor = RabbitMQSensor(
-        task_id="sample_sensor_check", rabbitmq_conn_id="conn_rabbitmq", queue_name="test"
+        task_id="sample_sensor_check",
+        rabbitmq_conn_id="conn_rabbitmq",
+        queue_name="test",
     )
     hook = RabbitMQHook(rabbitmq_conn_id="conn_rabbitmq")
     hook.publish("", "test", "")
@@ -54,7 +58,7 @@ def test_sensor_execute_returns_message():
     hook.publish("", "test", "Hello World")
 
     # Queue has 1 message, will be consumed and return the message
-    assert sensor.execute(context={}) == b"Hello World"
+    assert sensor.execute(context={}) == "Hello World"
 
     # Queue now has no message
     # Execute will timeout (it goes until it gets a True poke)
@@ -72,7 +76,7 @@ def test_errors_if_queue_does_not_exist():
         sensor = RabbitMQSensor(
             task_id="sample_sensor_check",
             rabbitmq_conn_id="conn_rabbitmq",
-            queue="does_not_exist",
+            queue_name="does_not_exist",
             poke_interval=1,
             timeout=2,
         )
