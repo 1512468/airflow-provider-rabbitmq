@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/airflow-provider-rabbitmq.svg)](https://badge.fury.io/py/airflow-provider-rabbitmq)
+
 # RabbitMQ Provider for Apache Airflow
 
 
