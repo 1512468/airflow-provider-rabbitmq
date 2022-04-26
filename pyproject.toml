@@ -3,6 +3,7 @@ name = "airflow-provider-rabbitmq"
 version = "0.6.0"
 description = "A RabbitMQ provider for Apache Airflow"
 authors = ["Tes Engineering <engineering@tesglobal.com>"]
+readme = README.md
 packages = [
     { include = "rabbitmq_provider" },
 ]
